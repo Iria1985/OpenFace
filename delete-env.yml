@@ -1,0 +1,16 @@
+- hosts: "all"
+  tasks:
+  - name: Delete remote directory
+    file: path="{{item.src}}" state="{{item.state}}"
+    with_items:
+      - { src: "{{appli_remote_root_path}}" , state: "absent"}
+
+  - find:
+      paths: "{{appli_remote_root_path}}"
+      recurse: yes
+    register: uninstall_result_find
+  - debug: var=uninstall_result_find
+  
+  - name: Delete remote Parent directory
+    file: path="{{appli_remote_root_path}}" state=absent
+    when: uninstall_result_find.examined == 0

@@ -1,0 +1,13 @@
+---
+- hosts: "nodes"
+  run_once: true
+  tasks:
+    - name: "Start application {{appli_name}}:{{ web_version }}"
+      docker_service:
+        state: present
+        project_src: "{{appli_remote_root_path}}"
+        files:
+          - docker-compose.yml
+        project_name: "{{appli_name}}"
+      register: result_docker_start_app
+    - debug: var=result_docker_start_app

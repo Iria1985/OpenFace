@@ -1,0 +1,17 @@
+---
+- hosts: "all"
+  run_once: true
+  tasks:
+    - stat: path={{appli_remote_root_path}}/docker-compose.yml
+      register: stop_application_compose_file
+    
+    - name: Stop application
+      docker_service:
+        state: absent
+        project_src: "{{appli_remote_root_path}}"
+        files:
+          - docker-compose.yml
+        project_name: "{{appli_prdocc}}"
+      register: result_docker_stop_app
+      when: stop_application_compose_file.stat.exists == True
+    - debug: var=result_docker_stop_app

@@ -1,0 +1,2 @@
+- name: STOP Application
+  import_playbook: stop-application.yml

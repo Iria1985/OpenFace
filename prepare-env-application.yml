@@ -1,0 +1,13 @@
+---
+- hosts: "all"
+  tasks:
+    - name: Create remote directory
+      file: path="{{item.src}}" state=directory mode={{item.mode}}
+      with_items:
+        - { src: "{{appli_remote_root_path}}" , mode: "0755" }
+        - { src: "{{web_remote_path}}" , mode: "0755" }
+        
+    - name: Templates files
+      template:
+        src: "files/docker-compose.yml.j2"
+        dest: "{{appli_remote_root_path}}/docker-compose.yml"

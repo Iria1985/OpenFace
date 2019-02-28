@@ -1,0 +1,16 @@
+- hosts: "all"
+  run_once: true
+  tasks:
+  - name: Check over execution user
+    command: "whoami"
+    register: whoami
+    
+  - name: Warning root message
+    debug:
+      msg:
+        - "ATTENTION: You are launching the playbook as root or with enable privilege escalation"
+    when: whoami.stdout == "root"
+    
+  - name: Pull image 
+    command: >
+      docker pull "{{web_image}}"

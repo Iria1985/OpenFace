@@ -1,0 +1,16 @@
+version: "2"
+services:
+  "{{web_compose_name}}":
+    image: "{{web_image}}"
+    container_name: "{{web_compose_name}}"
+    restart: always
+    depends_on:
+      - {{db_mongo_compose_name}}
+    ports:
+      - "{{ web_port1 }}"
+      - "{{ web_port2 }}"
+    networks:
+      - {{network_name_front}}
+networks:
+  {{network_name_front}}:
+    driver: {{network_driver}}

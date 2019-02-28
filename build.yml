@@ -1,0 +1,25 @@
+---
+- hosts: all
+  run_once: true
+  tasks:
+  - name: Create remote directory batch
+    file: path="{{item}}" state=directory mode=0755
+    with_items:
+      - "{{appli_remote_root_path}}"
+
+  - name: Copy files
+    copy:
+      src: "{{item.src}}"
+      dest: "{{item.dest}}"
+    with_items:
+      - { src: "build", dest: "{{appli_remote_root_path}}/" }
+
+  - name: Build images 
+    command: >
+      docker build -t "{{webimage}}"
+    register: result_build
+  - debug: msg="{{result_build}}"
+
+  - name: Push images to registry
+    command: >
+      docker push "{{web_image}}"

@@ -1,0 +1,11 @@
+- name: Prepare Application Environment
+  import_playbook: prepare-env-application.yml
+
+- name: Pull Docker Images 
+  import_playbook: pull_docker_images.yml
+
+- name: START Application
+  import_playbook: start-application.yml
+  tags: 
+    - start
+    - start-application

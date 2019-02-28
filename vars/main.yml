@@ -1,0 +1,16 @@
+appli_name: "openface"
+appli_url: "openface"
+appli_remote_root_path: "/users/home/usuario/{{appli_name}}"
+appli_remote_files_path: "{{ appli_remote_root_path }}/files"
+
+web_compose_name: "{{appli_name}}-web"
+web_image: "bamos/openface:{{ web_version }}"
+web_version: "latest"
+web_remote_path: "{{appli_remote_root_path}}/web"
+web_port1: "8000:8000"
+web_port2: "9000:9000"
+
+network_name_front: "{{appli_name}}_front"
+network_name_back: "{{appli_name}}_back"
+network_name_indispo: "{{appli_name}}_indispo"
+network_driver: "overlay"
